@@ -1,0 +1,35 @@
+.mail-composer{
+    display: inline-block;
+    border:1px solid grey;
+    font-size: 16px;
+    margin-left: 20px;
+    background-color:whitesmoke;
+}
+
+.mail-composer .compose{
+    padding-left:10px;
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+
+.mail-composer .form-section{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.mail-composer .form-section * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.mail-composer .form-section .form-control{
+    padding: 10px;
+    margin-left:20px;
+}
+
+.mail-composer .form-section .form-control:focus{
+outline-offset: 0;
+outline: 0;
+}
+
