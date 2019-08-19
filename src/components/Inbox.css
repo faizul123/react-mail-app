@@ -1,0 +1,52 @@
+.inbox-container{
+    display: inline-block;
+    padding: 15px;
+    border:1px solid lightblue;
+    margin-left: 10px;
+}
+
+.highlight{
+    background-color: yellow;
+    color:black;
+    font-weight: bold;
+}
+
+.message-container{
+    background-color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border:1px solid white;
+    cursor: pointer;
+}
+
+.message-container:hover{
+    border:1px solid lightblue;
+}
+
+.message-container_read{
+    background-color: whitesmoke;
+}
+
+.from,.subject,.receivedTime{
+    margin-right:10px;
+}
+
+.from{
+    font-size: 16px;
+    font-weight: bold;
+    color: lightslategray;
+    padding-right: 5px;
+    border-right: 1px solid black;
+}
+
+.subject{
+    font-size: 14px;
+}
+
+.receivedTime{
+    font-size: 12px;
+    float: right;
+    font-weight: 300;
+}

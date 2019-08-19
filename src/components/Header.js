@@ -3,6 +3,7 @@ import './Header.css'
 
 class Header extends Component {
     render() {
+        console.log("header ===>   ",this.props);
         return (
             <div>
                 <nav className="menu-container">
@@ -11,9 +12,9 @@ class Header extends Component {
                             <a href="#">New Mail</a>
                         </li>
                         <li className="menu-item">
-                            <a href="#">Inbox</a>
+                            <a href="#">Inbox<span className="badge">{this.props.unreadMessageCount}</span></a>
                         </li>
-                        <li className="menu-item">
+                        <li className="menu-item" onClick={this.props.logout}>
                             <a href="#">Logout</a>
                         </li>
                     </ul>

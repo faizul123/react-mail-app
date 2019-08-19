@@ -3,8 +3,10 @@ import './MailComposer.css'
 import './Login.css'
 class MailCompose extends Component {
     render() {
+        
         return (
             <div className="mail-composer">
+                
                 <form className="compose">
                     <div className="form-section">
                         <label>To:</label>
