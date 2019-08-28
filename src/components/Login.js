@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './Login.css';
 import Header from './Header';
-import Inbox from './Inbox';
+import MailBox from './MailBox';
+import Notification from './Notification'
 
 class Login extends Component {
     
@@ -15,7 +17,7 @@ class Login extends Component {
         this.username = null;
         this.password = null;
         this.state = {
-                isLogin:true,
+                isLogin:false,
                 username:this.username,
                 name:null
             };
@@ -34,16 +36,24 @@ class Login extends Component {
     }
 
     handleSubmit(event){
-        
+       // debugger;
         if(this.username === 'admin' && this.password === 'test'){
             console.log("Login Successfull")
+            //debugger;
+            // const notify = <Notification text="Login successfull" />
+            // ReactDOM.render(notify,document.getElementsByClassName("App")[0]);
             this.setState({
                 isLogin:true,
                 username:'admin',
-                name:'Admin'
+                name:'Admin',
+                message:null,
             })
         }else{
             console.log("username and password is not correct")
+            this.setState((state,props) => ({
+                message:"username and password is not correct",
+                type:"error"
+            }));
         }
         event.preventDefault();
     }
@@ -52,7 +62,9 @@ class Login extends Component {
         this.username = null;
         this.password = null;
         this.setState((state,props) => ({
-            isLogin:!state.isLogin
+            isLogin:!state.isLogin,
+            message:"Logout successfully!",
+            type:"success"
         }));
     }
 
@@ -87,9 +99,12 @@ class Login extends Component {
     }
 
     render() {
-        console.log("rendering...",(!this.state.isLogin || !this.checkUserSession()))
+        //console.log("rendering...",(!this.state.isLogin || !this.checkUserSession()))
+        //debugger;
+        console.log("Login.js  state ===> ", this.state);
         if(!this.state.isLogin || !this.checkUserSession())
             return (
+                <>
                 <div className="login-container">
                 <form name="login" onSubmit={this.handleSubmit} autoComplete="off">
                     <div className="form-section">
@@ -115,22 +130,32 @@ class Login extends Component {
                             </div>
                         </div>
                 </form>
+                {
+                    this.state.message &&
+                    <Notification text={this.state.message} type={this.state.type ==="error" ? "error" : ""} />
+                }
                 </div>
+                </>
             );
         else{
             return(
-                <InboxPage messages={this.fetchMessages()} loggedIn={this.state.isLogin} logoutHandler={this.logout} />
+                <>
+                <InboxPage messages={this.fetchMessages()} messageHandler={this.fetchMessages} loggedIn={this.state.isLogin} logoutHandler={this.logout} />
+                {
+                    this.state.message == null &&
+                    <Notification text="Successfully login" />
+                }
+                </>
             );
         }
     }
 }
 
 function InboxPage(props){
-    console.log(props)
+    //console.log(props)
     return (
         <div>
-            <Header unreadMessageCount={props.messages.unreadMessageCount} logout={props.logoutHandler}/>
-            <Inbox loggedIn={props.loggedIn} messages={props.messages.messages}/>
+            <Header unreadMessageCount={props.messages.unreadMessageCount} messageHandler={props.messageHandler} loggedIn={props.loggedIn} logout={props.logoutHandler} messages={props.messages.messages}/>
         </div>
     );
 }

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './Inbox.css'
 
-class Inbox extends Component {
+class MailBox extends Component {
 
     constructor(props){
         super(props);
         this.handleClick = this.handleClick.bind(this)
         this.canWeChangeReadState = this.canWeChangeReadState.bind(this);
         this.state = {
-            readMessageIds:[]
+            readMessageIds:[],
+            messages:props.messages
         }
     }
 
@@ -39,7 +40,7 @@ class Inbox extends Component {
                 <h2>Inbox</h2>
             {
                 
-                this.props.messages.map((message) => {
+                this.state.messages().map((message) => {
                     return <Message 
                         messageId={message.id}
                         from={message.from}
@@ -68,4 +69,4 @@ class Inbox extends Component {
 
 
 
-export default Inbox;
+export default MailBox;
