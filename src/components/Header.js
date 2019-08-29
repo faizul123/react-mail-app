@@ -13,27 +13,69 @@ class Header extends Component {
             menu:'Inbox'
         }
         this.setPage = this.setPage.bind(this);
+        this.onChangePath.bind(this);
+        window.onpopstate = this.onChangePath.bind(this);
+        console.log(window.onpopstate)
+        this.mainRef = React.createRef();
+        this.timerId = null;
     }
 
-    setPage(menuItem){
+    onChangePath(event){
+        
+        console.log(this);
+        console.log("history api event ",event)
+        if(event.path[0].history.state){
+            this.setState((state,props) => ({
+                menu: event.path[0].history.state.menu
+            }));
+        }
+    }
+
+
+    setPage(event,menuItem){
+        
         console.log(menuItem)
+        window.history.pushState(
+            {
+                menu:menuItem
+            },
+            null,
+            "/"+menuItem.toLowerCase().replace(" ","_")
+        )
         this.setState((state,props) => ({
             menu:menuItem
         }));
+        event.preventDefault();
     }
+
+    componentDidUpdate(){
+        
+        console.log(this.state);
+        console.log("main ref",this.mainRef)
+        debugger;
+        if(this.timerId) clearTimeout(this.timerId);
+        if(!this.mainRef.current.classList.contains("main")){
+            this.mainRef.current.classList.add("main");
+        }
+        this.timerId = setTimeout(() => {
+            this.mainRef.current.classList.remove("main");
+        },500)
+        
+    }
+
+
 
     render() {
        // console.log("header state===>   ",this.state);
         //console.log("header props===>   ",this.props);
-       // debugger;
         return (
-            <div>
+            <div className="main" ref={this.mainRef}>
                 <nav className="menu-container">
                     <ul className="menu">
-                        <li className="menu-item" onClick={() => this.setPage('New Mail')}>
+                        <li className="menu-item" onClick={(event) => this.setPage(event,'New Mail')}>
                             <a href="#">New Mail</a>
                         </li>
-                        <li className="menu-item" onClick={() => this.setPage('Inbox')}>
+                        <li className="menu-item" onClick={(event) => this.setPage(event,'Inbox')}>
                             <a href="#">Inbox<span className="badge">{this.props.unreadMessageCount}</span></a>
                         </li>
                         <li className="menu-item">

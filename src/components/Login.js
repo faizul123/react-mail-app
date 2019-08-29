@@ -4,6 +4,7 @@ import './Login.css';
 import Header from './Header';
 import MailBox from './MailBox';
 import Notification from './Notification'
+import DataSource from '../service/DataSource';
 
 class Login extends Component {
     
@@ -11,7 +12,6 @@ class Login extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.fetchMessages = this.fetchMessages.bind(this);
         this.checkUserSession = this.checkUserSession.bind(this);
         this.logout = this.logout.bind(this);
         this.username = null;
@@ -68,36 +68,6 @@ class Login extends Component {
         }));
     }
 
-
-    fetchMessages(){
-        return ({
-                "messages":[
-                            {
-                                "id":1,
-                                "from":"offers@Flipkart.com",
-                                "subject":"Hurry!!! Flipkart announces big billion day!",
-                                "receivedTime":"1:15 PM",
-                                "isRead":false
-                            },
-                            {
-                                "id":2,
-                                "from":"offers@amazon.com",
-                                "subject":"Hurry!!! Amazon announces big billion day!",
-                                "receivedTime":"1:10 PM",
-                                "isRead":true
-                            },
-                            {
-                                "id":3,
-                                "from":"fb-networks@fb.com",
-                                "subject":"Ramzon has changed his profile",
-                                "receivedTime":"1:00 PM",
-                                "isRead":true
-                            }
-                        ],
-                "unreadMessageCount":1
-                    });
-    }
-
     render() {
         //console.log("rendering...",(!this.state.isLogin || !this.checkUserSession()))
         //debugger;
@@ -140,7 +110,7 @@ class Login extends Component {
         else{
             return(
                 <>
-                <InboxPage messages={this.fetchMessages()} messageHandler={this.fetchMessages} loggedIn={this.state.isLogin} logoutHandler={this.logout} />
+                <InboxPage messages={DataSource.fetchMessages()} messageHandler={DataSource.fetchMessages} loggedIn={this.state.isLogin} logoutHandler={this.logout} />
                 {
                     this.state.message == null &&
                     <Notification text="Successfully login" />

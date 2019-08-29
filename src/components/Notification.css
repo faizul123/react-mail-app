@@ -3,7 +3,7 @@
 }
 
 .show{
-    animation:fadeIn 500ms
+    animation:fadeIn 1s
 }
 
 @keyframes fadeIn{

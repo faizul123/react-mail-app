@@ -60,7 +60,7 @@ class Notification extends Component {
 
     componentDidMount(){
         console.log("componentDidMount.")
-        debugger;
+        //debugger;
         if(this.setTimeoutId == null){
             this.setTimeoutId = setTimeout(() => {
                 console.log("Notification test ")
