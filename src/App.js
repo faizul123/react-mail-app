@@ -1,18 +1,29 @@
 import React from 'react';
-//import logo from './logo.svg';
 import './App.css';
-import Notification from './components/Notification'
-// import Header from './components/Header'
-// import MailComposer from './components/MailCompose'
-import Login from './components/Login'
+import { notify } from './components/Notification'
+import {DefaultButton, DefaultButton_SZ2,DefaultButton_SZ3,PrimaryButton,PrimaryButton_SZ2,PrimaryButton_SZ3} from './components/ui-elements/Controls/Controls'
 
-function App() {
-  return (
-    <div className="App">
-      <Login />
-      <Notification text="Hi, welcome to mail app" />
+class App extends React.Component {
+  
+  componentDidMount(){
+      notify("Hi, welcome to mailapp","success")
+  }
+
+  render() {
+    return (<div className="App">
+      <DefaultButton text="I'm Button"/>
+      <DefaultButton_SZ2 text="I'm Button"/>
+      <DefaultButton_SZ3 text="I'm Button"/>
+      <br/>
+      <hr/>
+      <PrimaryButton text="I'm Button"/>
+      <PrimaryButton_SZ2 text="I'm Button"/>
+      <PrimaryButton_SZ3 text="I'm Button"/>
+      <br/>
+      <hr/>
     </div>
-  );
+    );
+  }
 }
 
 export default App;

@@ -34,9 +34,10 @@
     position: relative;
 }
 
-.menu-container .menu .menu-item a{
+.menu-container .menu .menu-item span{
     text-decoration: none;
     color:whitesmoke;
+    cursor: pointer;
 }
 
 .menu-container .menu .menu-item a:active{

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './Login.css';
 import Header from './Header';
-import MailBox from './MailBox';
-import Notification from './Notification'
+import {notify} from './Notification'
 import DataSource from '../service/DataSource';
 
 class Login extends Component {
@@ -38,7 +36,7 @@ class Login extends Component {
     handleSubmit(event){
        // debugger;
         if(this.username === 'admin' && this.password === 'test'){
-            console.log("Login Successfull")
+            
             //debugger;
             // const notify = <Notification text="Login successfull" />
             // ReactDOM.render(notify,document.getElementsByClassName("App")[0]);
@@ -46,14 +44,9 @@ class Login extends Component {
                 isLogin:true,
                 username:'admin',
                 name:'Admin',
-                message:null,
             })
         }else{
-            console.log("username and password is not correct")
-            this.setState((state,props) => ({
-                message:"username and password is not correct",
-                type:"error"
-            }));
+            notify("username and password is not correct","error");
         }
         event.preventDefault();
     }
@@ -63,15 +56,19 @@ class Login extends Component {
         this.password = null;
         this.setState((state,props) => ({
             isLogin:!state.isLogin,
-            message:"Logout successfully!",
-            type:"success"
         }));
+    }
+
+    componentDidUpdate(){
+        if(!this.state.isLogin){
+            notify("logout successfully","success");
+        }
     }
 
     render() {
         //console.log("rendering...",(!this.state.isLogin || !this.checkUserSession()))
         //debugger;
-        console.log("Login.js  state ===> ", this.state);
+        
         if(!this.state.isLogin || !this.checkUserSession())
             return (
                 <>
@@ -100,10 +97,7 @@ class Login extends Component {
                             </div>
                         </div>
                 </form>
-                {
-                    this.state.message &&
-                    <Notification text={this.state.message} type={this.state.type ==="error" ? "error" : ""} />
-                }
+                
                 </div>
                 </>
             );
@@ -111,10 +105,7 @@ class Login extends Component {
             return(
                 <>
                 <InboxPage messages={DataSource.fetchMessages()} messageHandler={DataSource.fetchMessages} loggedIn={this.state.isLogin} logoutHandler={this.logout} />
-                {
-                    this.state.message == null &&
-                    <Notification text="Successfully login" />
-                }
+                
                 </>
             );
         }

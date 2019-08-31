@@ -1,0 +1,52 @@
+.btn{
+    text-align: center;
+    outline: 0;
+    border: 1px solid;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 500
+}
+
+.btn--default{
+    border-color: lightslategrey;
+    color:lightslategrey;
+    font-size: 12px;
+    padding: 5px;
+    margin:5px;
+    border-radius: 5px;
+}
+
+.btn--sz2{
+    font-size: 14px;
+    padding: 10px;
+    margin:10px;
+}
+
+.btn--sz3{
+    font-size: 16px;
+    padding: 15px;
+    margin:15px;
+}
+
+.btn__default{
+    background-color: darkgray;
+    color:white;
+}
+
+.btn__primary{
+    background-color: rgb(0, 162, 255);
+    color:whitesmoke;
+    border-color:whitesmoke;
+}
+
+.btn__secondary{
+    background-color: black;
+    color:whitesmoke;
+    border-color:whitesmoke;
+}
+
+.btn__danger{
+    background-color: red;
+    color:whitesmoke;
+    border-color:rgb(241, 70, 47);
+}

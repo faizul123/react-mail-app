@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import MailCompose from './MailCompose'
-import MailBox from './MailBox'
-import Notification from './Notification'
+import {MailBox} from './MailBox'
+import {notify} from './Notification'
 import './Header.css'
+import DataSource from '../service/DataSource';
 
 class Header extends Component {
 
@@ -15,15 +16,13 @@ class Header extends Component {
         this.setPage = this.setPage.bind(this);
         this.onChangePath.bind(this);
         window.onpopstate = this.onChangePath.bind(this);
-        console.log(window.onpopstate)
         this.mainRef = React.createRef();
         this.timerId = null;
+        
     }
 
     onChangePath(event){
-        
-        console.log(this);
-        console.log("history api event ",event)
+      
         if(event.path[0].history.state){
             this.setState((state,props) => ({
                 menu: event.path[0].history.state.menu
@@ -32,9 +31,8 @@ class Header extends Component {
     }
 
 
-    setPage(event,menuItem){
+    setPage(event,menuItem){      
         
-        console.log(menuItem)
         window.history.pushState(
             {
                 menu:menuItem
@@ -50,9 +48,6 @@ class Header extends Component {
 
     componentDidUpdate(){
         
-        console.log(this.state);
-        console.log("main ref",this.mainRef)
-        debugger;
         if(this.timerId) clearTimeout(this.timerId);
         if(!this.mainRef.current.classList.contains("main")){
             this.mainRef.current.classList.add("main");
@@ -63,7 +58,9 @@ class Header extends Component {
         
     }
 
-
+    componentDidMount(){
+        notify("Successfully login","success");
+    }
 
     render() {
        // console.log("header state===>   ",this.state);
@@ -73,16 +70,16 @@ class Header extends Component {
                 <nav className="menu-container">
                     <ul className="menu">
                         <li className="menu-item" onClick={(event) => this.setPage(event,'New Mail')}>
-                            <a href="#">New Mail</a>
+                            <span >New Mail</span>
                         </li>
                         <li className="menu-item" onClick={(event) => this.setPage(event,'Inbox')}>
-                            <a href="#">Inbox<span className="badge">{this.props.unreadMessageCount}</span></a>
+                            <span >Inbox<span className="badge">{this.props.unreadMessageCount}</span></span>
                         </li>
-                        <li className="menu-item">
-                            <a href="#">Sent</a>
+                        <li className="menu-item" onClick={(event) => this.setPage(event,'Sent')}>
+                            <span >Sent</span>
                         </li>
                         <li className="menu-item" onClick={this.props.logout}>
-                            <a href="#">Logout</a>
+                            <span >Logout</span>
                         </li>
                     </ul>
                 </nav>
@@ -91,16 +88,19 @@ class Header extends Component {
                 }
                 { this.state.menu && this.state.menu === 'Inbox' &&
                     <MailBox 
+                        type = {this.state.menu}
                         loggedIn={this.props.loggedIn} 
-                        messages={() => {
-                            console.log("Inbox ",this.props.messages)
-                            if(this.props.messages)
-                                return this.props.messages
-                            else {
-                                console.log("Inbox else",this.props.messageHandler());
-                                return this.props.messageHandler();
-                            }
-                        }}
+                        messages={
+                             DataSource.fetchMessages()
+                        }
+                        /> 
+                }
+                { this.state.menu && this.state.menu === 'Sent' &&
+                    <MailBox type={this.state.menu}
+                        loggedIn={this.props.loggedIn} 
+                        messages={
+                             DataSource.fetchSentMessages()
+                        }
                         /> 
                 }
             </div>

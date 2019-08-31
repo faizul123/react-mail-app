@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './MailBox.css'
 
-class MailBox extends Component {
+export class MailBox extends Component {
 
     constructor(props){
         super(props);
@@ -9,7 +9,7 @@ class MailBox extends Component {
         this.canWeChangeReadState = this.canWeChangeReadState.bind(this);
         this.state = {
             readMessageIds:[],
-            messages:props.messages
+            messages:props.messages.messages
         }
     }
 
@@ -34,20 +34,30 @@ class MailBox extends Component {
     }
 
     render() {
-        console.log("rendering...");
         return (
             <div className="inbox-container">
-                <h2>Inbox</h2>
+                <h2>{this.props.type}</h2>
             {
                 
-                this.state.messages().map((message) => {
-                    return <Message 
+                this.state.messages.map((message) => {
+                    if(this.props.type === 'Inbox')
+                        return <Message 
+                            key={message.id}
+                            messageId={message.id}
+                            from={message.from}
+                            subject={message.subject}
+                            time={message.time}
+                            isRead={this.canWeChangeReadState(message)}
+                            onClick={this.handleClick.bind(null,message.id)}
+                            />
+                    else 
+                        return <Message 
+                        key = {message.id}
                         messageId={message.id}
-                        from={message.from}
+                        from={"Me"}
                         subject={message.subject}
-                        receivedTime={message.receivedTime}
-                        isRead={this.canWeChangeReadState(message)}
-                        onClick={this.handleClick}
+                        time={message.time}
+                        isRead={true}
                         />
                 })
             }        
@@ -56,17 +66,17 @@ class MailBox extends Component {
     }
 }
 
- function Message(props){
+ export function Message(props){
     return(
-        <div onClickCapture={props.onClick.bind(null,props.messageId)} 
+        <div onClickCapture={props.onClick} 
         className={props.isRead ? "message-container message-container_read" : "message-container"}>
             <span className="from">{props.from}</span>
             <span className="subject">{props.subject}</span>
-            <span className="receivedTime">{props.receivedTime}</span>
+            <span className="receivedTime">{props.time}</span>
         </div>
     );
 }
 
 
 
-export default MailBox;
+export default {Message,MailBox};
