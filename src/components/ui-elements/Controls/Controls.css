@@ -272,6 +272,10 @@
     display: block;
 }
 
+.list-container:hover{
+    display: block;
+}
+
 .list-container--item{
     list-style-type: none;
     background-color:whitesmoke;

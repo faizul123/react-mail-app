@@ -23,9 +23,14 @@ class App extends React.Component {
       notify("Hi, welcome to mailapp","success")
   }
 
+
+  clickMe(){
+    alert("You clicked Me :)")
+  }
+
   render() {
     return (<div className="App">
-      <DefaultButton text="I'm Button"/>
+      {/* <DefaultButton text="I'm Button"/>
       <DefaultButton_SZ2 text="I'm Button"/>
       <DefaultButton_SZ3 text="I'm Button"/>
       <br/>
@@ -35,17 +40,19 @@ class App extends React.Component {
       <PrimaryButton_SZ3 text="I'm Button"/>
       <br/>
       <hr/>
-      <TextBox name="username" size="50" label="Enter your name" />
+      <TextBox name="username" label="Enter your name" />
       <TextBoxAndLabel name="username" size="30" label="Enter username" />
-      <TextBoxAndIcon name="username" icon="fa fa-spinner fa-spin"/>
+      <TextBoxAndIcon name="username" icon="fa fa-user"/>
       <MaterialTextBox />
       <hr/>
       <span className="warning font-16px">Ex:somedomin@domain.com</span> 
       <hr/>
       <CheckBox />
       <CheckBox2 />
-      <hr/>
+      <hr/> */}
       <Select />
+      <PrimaryButton text="click Me!" onClick={this.clickMe.bind(this)} />
+      <button onClick={this.clickMe.bind(this)} >Click Me !</button>
     </div>
     );
   }
